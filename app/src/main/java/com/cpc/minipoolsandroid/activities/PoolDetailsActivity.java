@@ -16,12 +16,14 @@ import java.util.Locale;
 
 public class PoolDetailsActivity extends AppCompatActivity {
 
+    private static final String EXTRA_POOL = "extra_pool";
+
     private Pool mPool;
     private TextView mCreatedByTextView;
 
     public static Intent createIntent(Context context, Pool pool) {
         Intent intent = new Intent(context, PoolDetailsActivity.class);
-        intent.putExtra("extra_pool", pool);
+        intent.putExtra(EXTRA_POOL, pool);
         return intent;
     }
 
@@ -38,6 +40,6 @@ public class PoolDetailsActivity extends AppCompatActivity {
         String createdAtDesc = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(mPool.createdAt);
 
         mCreatedByTextView = (TextView) findViewById(R.id.text_pool_created_by);
-        mCreatedByTextView.setText(getString(R.string.pool_creation, createdAtDesc, "John Smith"));
+        mCreatedByTextView.setText(getString(R.string.pool_creation, createdAtDesc, mPool.creator.name));
     }
 }

@@ -19,12 +19,13 @@ public class Pool implements Parcelable {
     private static final String LOG_TAG = Pool.class.getSimpleName();
 
     public String name;
+    public User creator;
     public int goalAmountValue;
     public String goalAmountCurrency;
     public JSONObject extra;
     public Date createdAt;
     public Date updatedAt;
-    public int creatorId;
+
 
     public Pool() {
     }
@@ -52,6 +53,7 @@ public class Pool implements Parcelable {
     //<editor-fold desc="Parcelable">
     protected Pool(Parcel in) {
         name = in.readString();
+        creator = in.readParcelable(User.class.getClassLoader());
         goalAmountValue = in.readInt();
         goalAmountCurrency = in.readString();
 
@@ -66,7 +68,6 @@ public class Pool implements Parcelable {
 
         createdAt = (Date) in.readSerializable();
         updatedAt = (Date) in.readSerializable();
-        creatorId = in.readInt();
     }
 
     @Override
@@ -77,12 +78,12 @@ public class Pool implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeParcelable(creator, flags);
         dest.writeInt(goalAmountValue);
         dest.writeString(goalAmountCurrency);
         dest.writeString(extra != null ? extra.toString() : null);
         dest.writeSerializable(createdAt);
         dest.writeSerializable(updatedAt);
-        dest.writeInt(creatorId);
     }
 
     public static final Parcelable.Creator<Pool> CREATOR = new Parcelable.Creator<Pool>() {
