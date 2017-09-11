@@ -1,5 +1,7 @@
 package com.cpc.minipoolsandroid.services;
 
+import com.cpc.minipoolsandroid.BuildConfig;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -19,7 +21,7 @@ public class MiniPoolsService {
 
     private MiniPoolsService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://mini-pools.herokuapp.com/")
+                .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

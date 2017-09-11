@@ -11,6 +11,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    productFlavors {
+        production {
+            buildConfigField "String", "API_URL", "\"https://mini-pools.herokuapp.com/\""
+        }
+        local {
+            buildConfigField "String", "API_URL", "\"http://10.0.3.2:3000\""
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
