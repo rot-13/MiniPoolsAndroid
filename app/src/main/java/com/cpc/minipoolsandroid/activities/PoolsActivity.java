@@ -1,5 +1,6 @@
 package com.cpc.minipoolsandroid.activities;
 
+import android.content.Intent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import com.cpc.minipoolsandroid.models.Pool;
 
 import java.util.List;
 
-public class PoolsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Pool>> {
+public class PoolsActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<List<Pool>>,
+        PoolsListAdapter.Listener {
 
     private static final int POOLS_LOADER_ID = 0;
 
@@ -28,6 +31,7 @@ public class PoolsActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_pools);
 
         mAdapter = new PoolsListAdapter();
+        mAdapter.setListener(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list_pools);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,5 +56,10 @@ public class PoolsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(Loader<List<Pool>> loader) {
+    }
+
+    @Override
+    public void onPoolTapped(Pool pool) {
+        startActivity(PoolDetailsActivity.createIntent(this, pool));
     }
 }

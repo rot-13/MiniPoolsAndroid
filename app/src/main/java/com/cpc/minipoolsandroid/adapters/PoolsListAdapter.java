@@ -17,6 +17,12 @@ import java.util.List;
 
 public class PoolsListAdapter extends RecyclerView.Adapter<PoolsListAdapter.PoolViewHolder> {
 
+    public interface Listener {
+        void onPoolTapped(Pool pool);
+    }
+
+    private Listener mListener;
+
     private List<Pool> mPools = Collections.emptyList();
 
     //<editor-fold desc="RecyclerView.Adapter impl">
@@ -24,7 +30,7 @@ public class PoolsListAdapter extends RecyclerView.Adapter<PoolsListAdapter.Pool
     public PoolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-        return new PoolViewHolder(view);
+        return new PoolViewHolder(view, mListener);
     }
 
     @Override
@@ -39,12 +45,23 @@ public class PoolsListAdapter extends RecyclerView.Adapter<PoolsListAdapter.Pool
 
     public static class PoolViewHolder extends RecyclerView.ViewHolder {
 
-        public PoolViewHolder(View itemView) {
+        private Pool mPool;
+
+        public PoolViewHolder(View itemView, final Listener listener) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onPoolTapped(mPool);
+                    }
+                }
+            });
         }
 
         public void bind(Pool pool) {
-            ((TextView) itemView).setText(pool.name);
+            mPool = pool;
+            ((TextView) itemView).setText(mPool.name);
         }
     }
     //</editor-fold>
@@ -52,5 +69,9 @@ public class PoolsListAdapter extends RecyclerView.Adapter<PoolsListAdapter.Pool
     public void setPools(List<Pool> pools) {
         mPools = pools;
         notifyDataSetChanged();
+    }
+
+    public void setListener(Listener listener) {
+        mListener = listener;
     }
 }
