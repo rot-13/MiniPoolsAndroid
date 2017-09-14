@@ -16,7 +16,7 @@ android {
             buildConfigField "String", "API_URL", "\"https://mini-pools.herokuapp.com/\""
         }
         local {
-            buildConfigField "String", "API_URL", "\"http://10.0.3.2:3000\""
+            buildConfigField "String", "API_URL", "\"http://10.0.2.2:3000\""
         }
     }
     buildTypes {
