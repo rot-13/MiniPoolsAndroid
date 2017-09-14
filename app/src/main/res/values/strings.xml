@@ -2,4 +2,8 @@
     <string name="app_name">Mini Pools</string>
     <string name="pool_creation">Pool created on %1$s by %2$s</string>
     <string name="header_contributions">Contributions</string>
+    <string name="hint_note">Enter a note</string>
+    <string name="hint_amount">Enter amount (in cents)</string>
+    <string name="cancel">Cancel</string>
+    <string name="contribute">Contribute</string>
 </resources>

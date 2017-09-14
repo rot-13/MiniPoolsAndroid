@@ -14,6 +14,7 @@ public class MiniPoolsService {
     private static MiniPoolsService sInstance = new MiniPoolsService();
 
     private PoolsService mPoolsService;
+    private UsersService mUsersService;
 
     public static MiniPoolsService getInstance() {
         return sInstance;
@@ -26,9 +27,14 @@ public class MiniPoolsService {
                 .build();
 
         mPoolsService = retrofit.create(PoolsService.class);
+        mUsersService = retrofit.create(UsersService.class);
     }
 
     public PoolsService getPoolsService() {
         return mPoolsService;
+    }
+
+    public UsersService getUsersService() {
+        return mUsersService;
     }
 }

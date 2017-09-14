@@ -68,4 +68,9 @@ public class User implements Parcelable {
         }
     };
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

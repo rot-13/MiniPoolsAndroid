@@ -2,11 +2,12 @@ package com.cpc.minipoolsandroid.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +16,20 @@ import android.widget.TextView;
 
 import com.cpc.minipoolsandroid.R;
 import com.cpc.minipoolsandroid.adapters.ContributionsListAdapter;
+import com.cpc.minipoolsandroid.fragments.AddContributionFragment;
+import com.cpc.minipoolsandroid.loaders.UsersLoader;
 import com.cpc.minipoolsandroid.models.Pool;
+import com.cpc.minipoolsandroid.models.User;
+import com.cpc.minipoolsandroid.models.UsersCache;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class PoolDetailsActivity extends AppCompatActivity {
+public class PoolDetailsActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<List<User>>,
+        AddContributionFragment.Listener {
 
     private static final String EXTRA_POOL = "extra_pool";
 
@@ -29,6 +37,7 @@ public class PoolDetailsActivity extends AppCompatActivity {
     private TextView mCreatedByTextView;
     private RecyclerView mRecyclerView;
     private ContributionsListAdapter mAdapter;
+    private AddContributionFragment mDialogFragment;
 
     public static Intent createIntent(Context context, Pool pool) {
         Intent intent = new Intent(context, PoolDetailsActivity.class);
@@ -61,9 +70,36 @@ public class PoolDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mDialogFragment = AddContributionFragment.newInstance(
+                        UsersCache.getInstance().getUsers());
+                mDialogFragment.show(getSupportFragmentManager(), AddContributionFragment.class.getSimpleName());
             }
         });
+
+        getSupportLoaderManager().initLoader(0, null, this);
     }
+
+    //<editor-fold desc="LoaderCallbacks">
+    @Override
+    public Loader<List<User>> onCreateLoader(int id, Bundle args) {
+        return new UsersLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<User>> loader, List<User> data) {
+        UsersCache.getInstance().setUsers((ArrayList<User>) data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<User>> loader) {
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="dialog listener">
+    @Override
+    public void onContribute(User contributor, String note, int amountValue, String amountCurrency) {
+
+    }
+    //</editor-fold>
 }
