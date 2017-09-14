@@ -8,7 +8,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ifeins on 9/11/17.
@@ -25,30 +27,8 @@ public class Pool implements Parcelable {
     public JSONObject extra;
     public Date createdAt;
     public Date updatedAt;
+    public List<Contribution> contributions;
 
-
-    public Pool() {
-    }
-
-    public static class Builder {
-
-        Pool mPool = new Pool();
-
-        public Builder withName(String name) {
-            mPool.name = name;
-            return this;
-        }
-
-        public Builder withGoalAmount(int amountValue, String amountCurrency) {
-            mPool.goalAmountValue = amountValue;
-            mPool.goalAmountCurrency = amountCurrency;
-            return this;
-        }
-
-        public Pool build() {
-            return mPool;
-        }
-    }
 
     //<editor-fold desc="Parcelable">
     protected Pool(Parcel in) {
@@ -68,6 +48,8 @@ public class Pool implements Parcelable {
 
         createdAt = (Date) in.readSerializable();
         updatedAt = (Date) in.readSerializable();
+        contributions = new ArrayList<>();
+        in.readTypedList(contributions, Contribution.CREATOR);
     }
 
     @Override
@@ -84,6 +66,7 @@ public class Pool implements Parcelable {
         dest.writeString(extra != null ? extra.toString() : null);
         dest.writeSerializable(createdAt);
         dest.writeSerializable(updatedAt);
+        dest.writeTypedList(contributions);
     }
 
     public static final Parcelable.Creator<Pool> CREATOR = new Parcelable.Creator<Pool>() {

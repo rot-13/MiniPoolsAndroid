@@ -15,4 +15,9 @@
         android:textAppearance="?android:textAppearanceMedium"
         tools:text="Pool created on the 27th of January by John Smith"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_contributions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

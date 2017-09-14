@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.cpc.minipoolsandroid.R;
+import com.cpc.minipoolsandroid.adapters.ContributionsListAdapter;
 import com.cpc.minipoolsandroid.models.Pool;
 
 import java.text.DateFormat;
@@ -20,6 +24,8 @@ public class PoolDetailsActivity extends AppCompatActivity {
 
     private Pool mPool;
     private TextView mCreatedByTextView;
+    private RecyclerView mRecyclerView;
+    private ContributionsListAdapter mAdapter;
 
     public static Intent createIntent(Context context, Pool pool) {
         Intent intent = new Intent(context, PoolDetailsActivity.class);
@@ -38,8 +44,14 @@ public class PoolDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(mPool.name);
 
         String createdAtDesc = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(mPool.createdAt);
-
         mCreatedByTextView = (TextView) findViewById(R.id.text_pool_created_by);
         mCreatedByTextView.setText(getString(R.string.pool_creation, createdAtDesc, mPool.creator.name));
+
+        mAdapter = new ContributionsListAdapter(mPool.contributions);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.list_contributions);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 }
