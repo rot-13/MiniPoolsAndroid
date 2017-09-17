@@ -20,6 +20,7 @@ public class Pool implements Parcelable {
 
     private static final String LOG_TAG = Pool.class.getSimpleName();
 
+    public int id;
     public String name;
     public User creator;
     public int goalAmountValue;
@@ -32,6 +33,7 @@ public class Pool implements Parcelable {
 
     //<editor-fold desc="Parcelable">
     protected Pool(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         creator = in.readParcelable(User.class.getClassLoader());
         goalAmountValue = in.readInt();
@@ -59,6 +61,7 @@ public class Pool implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeParcelable(creator, flags);
         dest.writeInt(goalAmountValue);

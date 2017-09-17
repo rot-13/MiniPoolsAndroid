@@ -27,6 +27,9 @@ public class Contribution implements Parcelable {
     public int poolId;
     public User contributor;
 
+    public Contribution() {
+    }
+
     //<editor-fold desc="Parcelable implementation">
     protected Contribution(Parcel in) {
         amountValue = in.readInt();
@@ -76,4 +79,30 @@ public class Contribution implements Parcelable {
     };
     //</editor-fold>
 
+    public static class Builder {
+        private Contribution mContribution = new Contribution();
+
+        public Contribution build() {
+            Contribution result = mContribution;
+            mContribution = new Contribution();
+
+            return result;
+        }
+
+        public Builder withAmount(int amountValue, String amountCurrency) {
+            mContribution.amountValue = amountValue;
+            mContribution.amountCurrency = amountCurrency;
+            return this;
+        }
+
+        public Builder withNote(String note) {
+            mContribution.note = note;
+            return this;
+        }
+
+        public Builder withContributor(User contributor) {
+            mContribution.contributor = contributor;
+            return this;
+        }
+    }
 }

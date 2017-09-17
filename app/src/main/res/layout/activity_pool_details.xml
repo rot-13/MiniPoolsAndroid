@@ -27,14 +27,43 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:textAppearance="?android:textAppearanceLarge"
+
         android:text="@string/header_contributions"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_contributions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/text_contributions_header"/>
+
+    <LinearLayout
+        android:id="@+id/progress_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_contributions"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingStart="?android:listPreferredItemPaddingStart"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.Material.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:indeterminate="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adding contribution..."
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
