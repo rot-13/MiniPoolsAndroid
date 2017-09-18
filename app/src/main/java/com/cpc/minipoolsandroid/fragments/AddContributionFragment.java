@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.cpc.minipoolsandroid.R;
@@ -29,6 +30,8 @@ public class AddContributionFragment extends DialogFragment {
     private Spinner mSpinnerView;
     private Button mCancelButton;
     private Button mContributeButton;
+    private EditText mNoteView;
+    private EditText mAmountView;
     private Listener mListener;
 
     public AddContributionFragment() {
@@ -70,6 +73,9 @@ public class AddContributionFragment extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerView.setAdapter(adapter);
 
+        mNoteView = (EditText) view.findViewById(R.id.edit_text);
+        mAmountView = (EditText) view.findViewById(R.id.edit_amount);
+
         mCancelButton = (Button) view.findViewById(R.id.btn_cancel);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +88,19 @@ public class AddContributionFragment extends DialogFragment {
         mContributeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    AddContributionFragment.this.dismiss();
-                    mListener.onContribute(null, null, 0, null);
-                }
+                onSubmit();
             }
         });
+    }
+
+    private void onSubmit() {
+        if (mListener == null) return;
+
+        User contributor = (User) mSpinnerView.getSelectedItem();
+        String note = mNoteView.getText().toString();
+        int amount = Integer.parseInt(mAmountView.getText().toString());
+        AddContributionFragment.this.dismiss();
+        mListener.onContribute(contributor, note, amount, "USD");
     }
 
     @Override

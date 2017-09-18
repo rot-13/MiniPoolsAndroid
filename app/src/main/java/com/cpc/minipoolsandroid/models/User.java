@@ -18,6 +18,7 @@ public class User implements Parcelable {
 
     private static final String TAG = "User";
 
+    public int id;
     public String name;
     public String avatarUrl;
     public JSONObject extra;
