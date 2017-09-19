@@ -7,6 +7,7 @@ import android.util.Log;
 import com.cpc.minipoolsandroid.models.Pool;
 import com.cpc.minipoolsandroid.services.MiniPoolsService;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,26 +23,42 @@ public class PoolsLoader extends Loader<List<Pool>> {
 
     private static final String LOG_TAG = PoolsLoader.class.getSimpleName();
 
+    private String mErrorMessage;
+
     public PoolsLoader(Context context) {
         super(context);
     }
 
     @Override
     protected void onStartLoading() {
+        mErrorMessage = null;
         Call<List<Pool>> poolsCall = MiniPoolsService.getInstance().getPoolsService().getPools();
         Log.i(LOG_TAG, "Fetching pools");
         poolsCall.enqueue(new Callback<List<Pool>>() {
             @Override
             public void onResponse(Call<List<Pool>> call, Response<List<Pool>> response) {
-                deliverResult(response.body());
+                if (response.isSuccessful()) {
+                    deliverResult(response.body());
+                } else {
+                    deliverResult(null);
+                    try {
+                        mErrorMessage = response.errorBody().string();
+                    } catch (IOException e) {
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<List<Pool>> call, Throwable t) {
                 Log.e(LOG_TAG, "Could not fetch pools", t);
-                deliverResult(Collections.<Pool>emptyList());
+                mErrorMessage = t.getMessage();
+                deliverResult(null);
             }
         });
+    }
+
+    public String getErrorMessage() {
+        return mErrorMessage;
     }
 
     @Override

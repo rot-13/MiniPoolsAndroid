@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:paddingStart="?android:listPreferredItemPaddingStart"
+                android:paddingEnd="?android:listPreferredItemPaddingEnd">
+
+    <TextView
+        android:id="@+id/text_contributor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        tools:text="John Smith"/>
+
+    <TextView
+        android:id="@+id/text_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_contributor"
+        android:layout_alignStart="@id/text_contributor"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        tools:text="Congratulations!"/>
+
+    <TextView
+        android:id="@+id/text_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        tools:text="$10.00"
+        />
+
+
+</RelativeLayout>

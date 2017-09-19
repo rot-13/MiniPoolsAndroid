@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cpc.minipoolsandroid.R;
 import com.cpc.minipoolsandroid.models.Contribution;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ContributionsListAdapter extends RecyclerView.Adapter<Contributions
     @Override
     public ContributionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                android.R.layout.simple_list_item_2, parent, false);
+                R.layout.list_item_contributions, parent, false);
         return new ContributionViewHolder(view);
     }
 
@@ -42,18 +43,21 @@ public class ContributionsListAdapter extends RecyclerView.Adapter<Contributions
 
     public static class ContributionViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mTitleView;
-        private final TextView mSubtitleView;
+        private final TextView mContributorView;
+        private final TextView mNoteView;
+        private final TextView mAmountView;
 
         public ContributionViewHolder(View itemView) {
             super(itemView);
-            mTitleView = (TextView) itemView.findViewById(android.R.id.text1);
-            mSubtitleView = (TextView) itemView.findViewById(android.R.id.text2);
+            mContributorView = (TextView) itemView.findViewById(R.id.text_contributor);
+            mNoteView = (TextView) itemView.findViewById(R.id.text_note);
+            mAmountView = (TextView) itemView.findViewById(R.id.text_amount);
         }
 
         public void bind(Contribution contribution) {
-            mTitleView.setText(contribution.contributor.name);
-            mSubtitleView.setText(contribution.note);
+            mContributorView.setText(contribution.contributor.name);
+            mNoteView.setText(contribution.note);
+            mAmountView.setText(mAmountView.getContext().getString(R.string.contribution_amount, contribution.amountValue / 100.0));
         }
     }
     //</editor-fold>
