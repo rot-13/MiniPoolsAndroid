@@ -26,6 +26,7 @@ public class Contribution implements Parcelable {
     public Date updatedAt;
     public int poolId;
     public User contributor;
+    public int contributorId;
 
     public Contribution() {
     }
@@ -102,6 +103,7 @@ public class Contribution implements Parcelable {
 
         public Builder withContributor(User contributor) {
             mContribution.contributor = contributor;
+            mContribution.contributorId = contributor.id;
             return this;
         }
     }

@@ -58,4 +58,9 @@ public class ContributionsListAdapter extends RecyclerView.Adapter<Contributions
     }
     //</editor-fold>
 
+    public void setContributions(List<Contribution> contributions) {
+        mContributions = contributions;
+        notifyDataSetChanged();
+    }
+
 }

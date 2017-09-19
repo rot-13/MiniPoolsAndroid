@@ -20,6 +20,9 @@ public interface PoolsService {
     @GET("pools")
     Call<List<Pool>> getPools();
 
+    @GET("pools/{id}")
+    Call<Pool> getPoolDetails(@Path("id") int poolId);
+
     @POST("pools/{id}/contributions")
     Call<Contribution> contribute(@Path("id") int poolId, @Body Contribution contribution);
 }
